@@ -5,10 +5,21 @@ import getpass
 import os
 import msoffcrypto
 import io
+import win32com.client as win32
+
 
 # Set save directory
 save_directory = r"H:\ACT_SKRIPTY_USEFULL\Zdraveni_Novych_Klientu_Ahoj\AutomatedGenerationNewClients"
 os.makedirs(save_directory, exist_ok=True)  # Ensure the directory exists
+
+
+#Email Definitions
+sender_email = "mzach@mediso.com"
+receiver_email  = "mzach@mediso.com"
+subject = "Sestava nových klientů za předchozí dny"
+body = "Hello, \n\nAttached is the report for the new clients .\n\nBest regards. \n MZ"
+attachment_file_path = r"H:\ACT_SKRIPTY_USEFULL\Zdraveni_Novych_Klientu_Ahoj\AutomatedGenerationNewClients\NewClients_2025-03-31_protected.xlsx"  # Lalala
+
 
 # Get user input
 username = input("Enter username: ")
@@ -64,8 +75,25 @@ try:
 
         print(f"🔒 Encrypted Excel file saved at: {encrypted_file}")
 
+
+        outlook = win32.Dispatch("Outlook.Application")
+        mail = outlook.CreateItem(0)  # 0: olMailItem (new mail item)
+
+        mail.Subject = subject
+        mail.Body = body
+        mail.To = receiver_email
+        mail.Attachments.Add(attachment_file_path)
+
+        mail.Save()
+        print(f"Email drafted successfully with attachment. Draft saved in Outlook.")
+
     else:
-        print("Stored Procedure executed successfully, but no results were returned.")
+        print("Something wrong happend lalala im not telling u what.")
+
+
+
+
+
 
 except Exception as e:
     print(f"Error occurred: {str(e)}")
