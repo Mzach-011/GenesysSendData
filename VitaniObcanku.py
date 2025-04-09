@@ -8,6 +8,24 @@ import io
 import win32com.client as win32
 
 
+message = """
+************************************************************************************************
+************************************************************************************************
+************************************************************************************************
+This report generation was made possible through the divine intervention of our Lord and Savior,
+the DWH ArchiteKt, ArchiPanda 🐼🙏. 
+
+Without his infinite wisdom, unmatched skills in ETL, and his deep love for data, 
+none of this would be possible. ArchiPanda’s work is the true backbone of the DWH universe,  
+and may his pandas always be plentiful and his queries forever optimized.  
+🐼🐼🐼 Bless the pandas, bless the data, and bless ArchiPanda! 🐼🐼🐼.  
+***********************************************************************************************
+***********************************************************************************************
+***********************************************************************************************
+"""
+
+print(message)
+
 
 
 print ("Vyber kterou blbost generuju:")
@@ -46,7 +64,7 @@ database = "DWH_L1_OnlnCore"
 
 # Calculate date parameter
 cur_date = datetime.now().date()
-used_date = cur_date - timedelta(days=3)
+used_date = cur_date - timedelta(days=1)
 used_date_str = used_date.strftime('%Y-%m-%d')
 
 print(f"Executing stored procedure: EXEC {procedure} '{used_date_str}'")
@@ -102,10 +120,10 @@ try:
 
         mail.Subject = subject
         mail.Body = body
-        mail.To = "mzach@mediso.com"  # Change as needed
+        mail.To = "mzach@mediso.cz"  # Change as needed
         mail.Attachments.Add(latest_file_path)
 
-        mail.Save()
+        mail.Send()
         print(f"Email drafted successfully with attachment. Draft saved in Outlook.")
 
     else:
